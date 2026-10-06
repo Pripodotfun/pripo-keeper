@@ -1,0 +1,28 @@
+{
+  "name": "@pripo/keeper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test test/*.test.ts",
+    "check": "node scripts/check-vendor.mjs && npm run typecheck && npm test && npm run build",
+    "start": "node dist/cli.js",
+    "test:integration": "node scripts/build-fixture.mjs && node --import tsx --test test/local.e2e.ts"
+  },
+  "dependencies": {
+    "@pripo/sdk": "file:vendor/pripo-sdk-0.1.0.tgz",
+    "proper-lockfile": "4.1.2",
+    "viem": "2.57.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "@types/proper-lockfile": "4.1.4",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

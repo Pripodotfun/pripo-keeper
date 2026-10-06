@@ -1,0 +1,8 @@
+{
+  "package": "@pripo/sdk",
+  "version": "0.1.0",
+  "sdkCommit": "a84e156f5248a14f2bcee54a23cb6bc4594ca435",
+  "contractsCommit": "7c868c5c1ae34f6b00c204bdf1cdf3c6608148bf",
+  "archive": "pripo-sdk-0.1.0.tgz",
+  "sha256": "e0ee2cff6df39d821dadc14983559cfb14d30297cced5ff0ab1106f16c747722"
+}
