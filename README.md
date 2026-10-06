@@ -15,7 +15,9 @@ node --env-file=.env dist/cli.js --once
 node --env-file=.env dist/cli.js
 ```
 
-`config/monad-testnet.json` contains public addresses from Pripo's October 6, 2026 testnet deployment, chain 10143. Supply another configuration with `--config path.json`. Startup verifies the factory, sweeper and backstop all use the configured vault, the factory is registered, and the vault has the configured backstop controller. A configured Pyth adapter must match the market's adapter exactly.
+`config/monad-testnet.json` targets the active October 6, 2026 **mUSDC demo**, chain 10143: factory `0x133A614CBE2CBA1789E67E0898C0F5c56Eb7BBf0` and vault `0x1980B3a41393f610a8BE552C71BAE3F42AAB6735`. Its collateral is freely minted Pripo Mock USDC, not Circle-issued USDC. The original native-USDC deployment remains available in `config/monad-testnet-native.json`.
+
+Supply another configuration with `--config path.json` and give each deployment its own `KEEPER_STATE_PATH`; an existing journal is bound to its factory, vault, chain and signer. Startup verifies the factory, sweeper and backstop all use the configured vault, the factory is registered, and the vault has the configured backstop controller. A configured Pyth adapter must match the market's adapter exactly.
 
 Observation mode reads state and simulates eligible calls from `KEEPER_ADDRESS`. It never signs or submits, even if a private key happens to be present. Use a separate state path if observing alongside an active keeper, because every process exclusively locks its journal.
 
@@ -68,4 +70,6 @@ Integration starts an isolated Anvil, deploys the linked production factory/vaul
 
 This is a first operational slice. Target-chain signed Pyth liquidation, charged gas measurements, sustained RPC load and native execution-stream latency remain to be validated. The snapshot scanner favors complete state reconstruction and has not been benchmarked for the configured maximum market count. Resolver `finalize` and stale wind-down jobs require implemented, deployed contract entry points and are not enabled here.
 
-On October 6, 2026 at 14:16 UTC, an observation-only run verified the configured Monad testnet wiring at block **68,706,558** and completed a scan at **68,706,562**. The factory had **zero markets** and the vault protocol reserve was **zero**. No key was loaded and no transaction was submitted. This verifies connectivity and deployed wiring; it does not establish live liquidation, Pyth or fee behavior.
+On October 6, 2026 at 14:16 UTC, an observation-only run verified the original native-USDC deployment at block **68,706,558** and completed a scan at **68,706,562**. That factory had **zero markets** and its vault protocol reserve was **zero**.
+
+At 14:51 UTC, the active mUSDC demo passed wiring verification at block **68,713,547**, with **10,000 mUSDC** in protocol reserve. Its scan at **68,713,551** reported **zero markets**, zero pending transactions and no errors. These are historical snapshots. Neither run loaded a signing key or submitted a transaction, and neither establishes live liquidation, Pyth or fee behavior.
