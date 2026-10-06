@@ -69,10 +69,24 @@ Unit tests cover scheduling, fresh-price eligibility, ADL deadlines, bounded non
 
 Integration starts an isolated Anvil, deploys the linked production factory/vault and market runtime, and verifies observation, liquidation, bounded ADL cursor progress across restart, reservation cleanup and fee sweeping. The market implementation adds one explicitly test-only historical-loss injection method to make recovery scenarios reproducible. No external RPC or real key is used. The Solidity fixture is compiled with Foundry and the pinned contracts dependencies; it is never a deployable keeper artifact.
 
-This is a first operational slice. Target-chain signed Pyth liquidation, charged gas measurements, sustained RPC load and native execution-stream latency remain to be validated. The snapshot scanner favors complete state reconstruction and has not been benchmarked for the configured maximum market count. Resolver `finalize` and stale wind-down jobs require implemented, deployed contract entry points and are not enabled here.
+This is a first operational slice. Target-chain signed Pyth liquidation, liquidation/ADL gas measurements, sustained RPC load and native execution-stream latency remain to be validated. The snapshot scanner favors complete state reconstruction and has not been benchmarked for the configured maximum market count. Resolver `finalize` and stale wind-down jobs require implemented, deployed contract entry points and are not enabled here.
 
 On October 6, 2026 at 14:16 UTC, an observation-only run verified the original native-USDC deployment at block **68,706,558** and completed a scan at **68,706,562**. That factory had **zero markets** and its vault protocol reserve was **zero**.
 
 At 14:51 UTC, the active mUSDC demo passed wiring verification at block **68,713,547**, with **10,000 mUSDC** in protocol reserve. Its scan at **68,713,551** reported **zero markets**, zero pending transactions and no errors. These are historical snapshots. Neither run loaded a signing key or submitted a transaction, and neither establishes live liquidation, Pyth or fee behavior.
 
 At 16:30 UTC, the keeper discovered [PRIPO:DEMO](https://testnet.monadvision.com/address/0xeA326A40694dA4D7C5c64719B48Ba561EcA8C0Eb), created at block **68,730,216** by the active demo factory. Reads at **68,732,898** confirmed an active oracle-less market, **2,000 mUSDC** market insurance and no positions. The observation scan at **68,732,908** completed with one market, zero positions, one eligible idle poke and zero errors. Poke simulation and estimation succeeded from the creator's public address, producing a **202,245 gas** prepared limit including the configured 10,000-unit buffer. This is an estimate, not a charged-fee measurement. No signing key was loaded and no transaction was sent; liquidation/ADL still requires positions and separate validation.
+
+### Signed maintenance run — October 6
+
+At 22:12 UTC, the dedicated keeper `0x9f174Ff6a3e661A21872f1cb0c77E098448Eb85C` received **0.2 testnet MON** and executed one funding poke and one fee sweep against PRIPO:DEMO. Both transactions passed fresh simulation, used the durable keeper journal, and received three confirmations. The [public receipt record](docs/testnet-maintenance-2026-10-06.json) includes hashes, gas limits, effective gas prices and historical balance reconciliation; it contains no keys or signed transaction bytes.
+
+| Action | Block | Charged gas | Fee (testnet MON) |
+| --- | ---: | ---: | ---: |
+| Fund keeper | 68,800,676 | 31,000 | 0.003162 |
+| Poke (keeper nonce 0) | 68,800,692 | 202,742 | 0.020679684 |
+| Sweep (keeper nonce 1) | 68,800,711 | 159,045 | 0.016222590 |
+
+Maintenance fees total **0.036902274 MON**; including the funding transfer's gas, network fees total **0.040064274 MON**. Each receipt's charged gas equals its submitted gas limit, and historical sender balance changes reconcile exactly. At block **68,800,718**, the keeper retained **0.163097726 MON**, its journal had no pending transactions, and the 1-unit long remained open and non-liquidatable. Fractional protocol-fee dust remained below the token's six-decimal transfer precision.
+
+A separate observation-only restart at **68,807,229** found the saved schedule and no pending transactions or scan errors. The next idle poke was due after the elapsed block interval; the hourly sweep was not repeated. This was a bounded maintenance run, not a persistent service. No liquidation, ADL or Pyth transaction was sent.

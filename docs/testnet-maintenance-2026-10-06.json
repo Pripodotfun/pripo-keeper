@@ -1,0 +1,120 @@
+{
+  "chainId": 10143,
+  "market": "0xeA326A40694dA4D7C5c64719B48Ba561EcA8C0Eb",
+  "factory": "0x133A614CBE2CBA1789E67E0898C0F5c56Eb7BBf0",
+  "vault": "0x1980B3a41393f610a8BE552C71BAE3F42AAB6735",
+  "keeper": "0x9f174Ff6a3e661A21872f1cb0c77E098448Eb85C",
+  "startedAt": "2026-10-06T22:11:55.958Z",
+  "completedAt": "2026-10-06T22:12:24.342Z",
+  "scope": [
+    "fund dedicated keeper with 0.2 testnet MON",
+    "poke",
+    "sweep"
+  ],
+  "confirmations": 3,
+  "fundingReceipt": {
+    "hash": "0x0184fc7897fda3c56c468f0c79de1bc78717e0dfdec7e05762f04a4451425e27",
+    "status": "success",
+    "block": "68800676",
+    "blockHash": "0x56e2603a6ccca93f5d919ba444b1a446d1040aaae4d9eeef212dabc1ecb6b124",
+    "nonce": 37,
+    "to": "0x9f174ff6a3e661a21872f1cb0c77e098448eb85c",
+    "gasLimit": "31000",
+    "receiptGasUsed": "31000",
+    "effectiveGasPriceWei": "102000000000",
+    "chargedFeeWei": "3162000000000000",
+    "valueWei": "200000000000000000",
+    "balanceBeforeWei": "34459069664290193073",
+    "balanceAfterWei": "34255907664290193073",
+    "balanceDeltaWei": "203162000000000000",
+    "balanceReconciled": true
+  },
+  "maintenanceReceipts": [
+    {
+      "kind": "poke",
+      "hash": "0x005b7ae13729430cd1da2a6b01db88d22b9eaffec6c6632826595ac8c8c6a0ef",
+      "status": "success",
+      "block": "68800692",
+      "blockHash": "0x693bb46d0d1f8938b80b66b3383ea7e858fa9dd440e936f2382a79ce0dd8657a",
+      "nonce": 0,
+      "to": "0xea326a40694da4d7c5c64719b48ba561eca8c0eb",
+      "gasLimit": "202742",
+      "receiptGasUsed": "202742",
+      "effectiveGasPriceWei": "102000000000",
+      "chargedFeeWei": "20679684000000000",
+      "valueWei": "0",
+      "balanceBeforeWei": "200000000000000000",
+      "balanceAfterWei": "179320316000000000",
+      "balanceDeltaWei": "20679684000000000",
+      "balanceReconciled": true
+    },
+    {
+      "kind": "sweep",
+      "hash": "0x9c6c3f0efdc705331585d805b37e128614dc1a286955d35dc8a1dd3e61685208",
+      "status": "success",
+      "block": "68800711",
+      "blockHash": "0xacbedf07ff5985aefbfc3b254b661e79203945f26d8673323397d762b8846313",
+      "nonce": 1,
+      "to": "0x8a893a5f330a49006a08290450b46f1b3cb7288e",
+      "gasLimit": "159045",
+      "receiptGasUsed": "159045",
+      "effectiveGasPriceWei": "102000000000",
+      "chargedFeeWei": "16222590000000000",
+      "valueWei": "0",
+      "balanceBeforeWei": "179320316000000000",
+      "balanceAfterWei": "163097726000000000",
+      "balanceDeltaWei": "16222590000000000",
+      "balanceReconciled": true
+    }
+  ],
+  "totalMaintenanceFeeWei": "36902274000000000",
+  "totalNetworkFeeWei": "40064274000000000",
+  "finalBlock": "68800718",
+  "finalKeeperBalanceWei": "163097726000000000",
+  "finalLedger": {
+    "protocolOwed": "8004002003",
+    "creatorOwed": "24012006003001500",
+    "insurance": "2000024012006003001500",
+    "clearing": "0",
+    "fundingPool": "0",
+    "skewPool": "0"
+  },
+  "finalBook": {
+    "blockNumber": "68800718",
+    "positions": [
+      {
+        "user": "0x3b2F1773a1B279A1b0b13aD425019C91433693c3",
+        "size": "1000000000000000000",
+        "margin": "50025012506253126564",
+        "entryCost": "100050025012506253127",
+        "lastFundingIndex": "0",
+        "slot": 0,
+        "adlPending": false
+      }
+    ]
+  },
+  "finalHealth": [
+    {
+      "blockNumber": "68800718",
+      "healthWad": "499999999999999999",
+      "liquidatable": false
+    }
+  ],
+  "pendingTransactions": 0,
+  "limitations": [
+    "Mock collateral demo; not native USDC validation.",
+    "No liquidation, ADL or Pyth transaction executed.",
+    "One bounded run; no persistent keeper service started."
+  ],
+  "observationRestart": {
+    "block": "68807229",
+    "observedAt": "2026-10-06T22:45:22.670Z",
+    "positions": 1,
+    "pendingTransactions": 0,
+    "failed": 0,
+    "eligibleActions": [
+      "poke"
+    ],
+    "transactionsSent": 0
+  }
+}
