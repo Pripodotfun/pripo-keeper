@@ -11,6 +11,7 @@
   "confirmations": 3,
   "maxPending": 8,
   "idleBlocks": 600,
+  "logChunkSize": 10,
   "sweepSeconds": 3600,
   "topUpSeconds": 86400,
   "adlIterations": 64,
