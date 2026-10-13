@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
-import { createPripoClient } from '@pripo/sdk';
+import { createPripoClient, HermesClient } from '@pripo/sdk';
 import { createPublicClient, defineChain, getAddress, http, isAddressEqual, webSocket, type Hex } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { parseConfig } from './config.js';
@@ -31,8 +31,12 @@ async function main() {
   const chain = defineChain({ id: config.chainId, name: 'Pripo keeper network',
     nativeCurrency: { name: 'Native', symbol: 'MON', decimals: 18 }, rpcUrls: { default: { http: [rpcUrl] } } });
   const publicClient = createPublicClient({ chain, transport: http(rpcUrl, { timeout: 10_000, retryCount: 1 }), cacheTime: 0 });
+  // The default Hermes endpoint rejects unauthenticated requests; PYTH_API_KEY is sent as a bearer token.
+  const pythKey = process.env.PYTH_API_KEY;
+  const oracle = pythKey ? new HermesClient({ fetch: (url, init) => fetch(url, { ...init,
+    headers: { ...init?.headers, Authorization: `Bearer ${pythKey}` }, redirect: 'error' }) }) : undefined;
   const sdk = createPripoClient({ publicClient, chain, vault: config.vault, factory: config.factory,
-    pythAdapters: config.pythAdapters, account: config.account, gasBuffer: config.gasBuffer });
+    pythAdapters: config.pythAdapters, account: config.account, gasBuffer: config.gasBuffer, ...(oracle ? { oracle } : {}) });
   log('deployment-verified', await verifyDeployment(sdk, config));
   const identity = [config.chainId, config.factory.toLowerCase(), config.vault.toLowerCase(), config.account.toLowerCase()].join(':');
   const store = await FileStore.open(resolve(process.env.KEEPER_STATE_PATH ?? '.state/keeper.json'), identity);
