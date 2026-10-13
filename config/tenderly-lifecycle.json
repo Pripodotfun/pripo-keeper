@@ -1,0 +1,22 @@
+{
+  "chainId": 999143,
+  "factory": "0x4aB56f1551cA5C363a46AFD6a1e078bD60Ab11A6",
+  "vault": "0x73e4Ea4161a844B8b857D9ffa8f8498324905121",
+  "feeSweeper": "0x6453643095418e66a3Aa6F21F149C3717F03644e",
+  "backstop": "0x0A0a92aEFB45C1578A6f9639b81406272057cE52",
+  "pythAdapters": [
+    "0x5F57CB43D1506A17f3A1164da94aA11D8D04F503"
+  ],
+  "pollIntervalMs": 2000,
+  "confirmations": 1,
+  "maxPending": 8,
+  "idleBlocks": 600,
+  "logChunkSize": 1000,
+  "sweepSeconds": 3600,
+  "topUpSeconds": 86400,
+  "adlIterations": 64,
+  "gasBuffer": "10000",
+  "maxGas": "150010000",
+  "maxFeePerGas": "200000000000",
+  "minBalance": "100000000000000000"
+}
