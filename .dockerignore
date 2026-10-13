@@ -1,0 +1,14 @@
+node_modules
+.next
+dist
+.envio
+.state
+.test-artifacts
+test-results
+playwright-report
+.env*
+!.env.example
+*.log
+*.tsbuildinfo
+.DS_Store
+.git
